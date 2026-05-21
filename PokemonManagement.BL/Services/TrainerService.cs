@@ -32,7 +32,16 @@ namespace PokemonManagement.BL.Services
 
         public void Evolve(TrainerPokemon ownedPokemon)
         {
-            // TODO Implement
+            if (ownedPokemon== null) 
+                throw new EntityNotFoundException();
+
+            if (ownedPokemon.Pokemon == null || ownedPokemon.Pokemon.EvolvesToId == null)
+                throw new PokemonLogicException("Pokemon cannot evolve");
+
+            ownedPokemon.PokemonId = ownedPokemon.Pokemon.EvolvesToId.Value;
+            
+
+            _repository.Update(ownedPokemon);
         }
     }
 }
